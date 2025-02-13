@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #0a67fc;
+  --color-secondary: #d3d3d3;
+  --color-background: #f5f5f5;
+  --color-text: #1f2937;
+}
+
+.theme-dark {
+  --color-primary: #0a67fc;
+  --color-secondary: #62626c;
+  --color-background: #2b2b30;
+  --color-text: #e4e4e7;
+}
 
 #app {
   max-width: 1280px;

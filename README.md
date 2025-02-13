@@ -1,3 +1,51 @@
+# .
+
+This template should help get you started developing with Vue 3 in Vite.
+
+## Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Type Support for `.vue` Imports in TS
+
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Run Unit Tests with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
+
+---
+
 # Radio Browser Challenge
 
 ## Introdução
@@ -9,7 +57,7 @@ O objetivo é avaliar a sua forma de estruturação e autonomia em decisões par
 [SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
 
 ### Antes de começar
- 
+
 - O projeto deve utilizar a Linguagem e Framework específica na avaliação. Por exempo: Next.js, React.js, Nuxt.js, Vue.js, Angular e entre outras;
 - Considere como deadline da avaliação a partir do início do teste. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
 - Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
@@ -24,12 +72,12 @@ Sua tarefa para esse case será desenvolver uma aplicação que consuma uma API 
 1. Estudar a documentação da REST API: https://de1.api.radio-browser.info/json/stations/search?limit=10
 2. Utilizar Frameworks CSS, recomendamos alguns como:
 
-    - Tailwind CSS: https://tailwindcss.com/
-    - Material UI: https://material-ui.com/
-    - Angular Material: https://material.angular.io/
-    - Bootstrap: https://getbootstrap.com/
-    - Bulma: https://bulma.io/
-    - Outro de sua preferência
+   - Tailwind CSS: https://tailwindcss.com/
+   - Material UI: https://material-ui.com/
+   - Angular Material: https://material.angular.io/
+   - Bootstrap: https://getbootstrap.com/
+   - Bulma: https://bulma.io/
+   - Outro de sua preferência
 
 ## Tela para Desktop
 
@@ -49,7 +97,7 @@ Exemplo da resposta:
 
 ```json
 [
-    {
+  {
     "changeuuid": "f6a6d140-c065-4e3b-9bda-3fb752148ae7",
     "stationuuid": "a25700ef-e952-4b73-8b4e-b92d938cb020",
     "serveruuid": "46ce76c5-203b-43e3-b709-5748219f9fcd",
@@ -86,7 +134,7 @@ Exemplo da resposta:
     "geo_lat": null,
     "geo_long": null,
     "has_extended_info": false
-  },
+  }
 ]
 ```
 
@@ -125,9 +173,9 @@ Além do desafio proposto temos alguns diferenciais:
 - Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
 - Como instalar e usar o projeto (instruções)
 - Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
+- Se está usando github pessoal, referencie que é um challenge by coodesh:
 
->  This is a challenge by [Coodesh](https://coodesh.com/)
+> This is a challenge by [Coodesh](https://coodesh.com/)
 
 ## Finalização e Instruções para a Apresentação
 
@@ -138,4 +186,4 @@ Além do desafio proposto temos alguns diferenciais:
 
 ## Suporte
 
-Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma. 
+Use a [nossa comunidade](https://discord.gg/rdXbEvjsWu) para tirar dúvidas sobre o processo ou envie uma mensagem diretamente a um especialista no chat da plataforma.

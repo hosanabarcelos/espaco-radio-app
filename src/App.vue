@@ -1,12 +1,11 @@
-<script setup lang="ts">
+<script setup>
+import { RouterView, RouterLink } from "vue-router";
 
 </script>
 
 <template>
-  <div>
-    Init
-  </div>
+  <nav>
+    <RouterLink to="/">Radio</RouterLink>
+  </nav>
+  <RouterView />
 </template>
-
-<style scoped>
-</style>

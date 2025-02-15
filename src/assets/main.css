@@ -5,49 +5,66 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #0a67fc;
-  --color-secondary: #d3d3d3;
-  --color-background: #f5f5f5;
-  --color-text: #1f2937;
+	--color-primary: #2eabc5;
+	--color-secondary: #d3d3d3;
+	--color-background: #f5f5f5;
+	--color-text: #001f3e;
 }
 
 .theme-dark {
-  --color-primary: #0a67fc;
-  --color-secondary: #62626c;
-  --color-background: #2b2b30;
-  --color-text: #e4e4e7;
+	--color-primary: #2eabc5;
+	--color-secondary: #62626c;
+	--color-background: #001f3e;
+	--color-text: #e4e4e7;
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	font-weight: normal;
 }
 
 a,
 .green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+	text-decoration: none;
+	color: hsla(160, 100%, 37%, 1);
+	transition: 0.4s;
+	padding: 3px;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #091929;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #4a5568;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #718096;
 }
 
 @media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+	a:hover {
+		background-color: hsla(160, 100%, 37%, 0.2);
+	}
 }
 
 @media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+	body {
+		display: flex;
+		place-items: center;
+	}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+	#app {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		padding: 0 2rem;
+	}
 }

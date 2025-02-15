@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Trench Thin';
+  src: url('./fonts/trench100free.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

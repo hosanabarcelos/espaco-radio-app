@@ -14,7 +14,7 @@ const isNextDisabled = computed(() => props.currentPage >= props.totalPages)
 </script>
 
 <template>
-	<div v-if="totalPages > 1" class="flex justify-between items-center bg-gray-800 p-3 rounded-lg">
+	<div v-if="totalPages > 1" class="flex justify-between items-center p-3 rounded-lg">
 		<button
 			@click="emit('prevPage')"
 			:disabled="isPrevDisabled"

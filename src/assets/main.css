@@ -11,6 +11,10 @@
 	--color-text: #001f3e;
 }
 
+body {
+  background:  #0d1117;
+}
+
 .theme-dark {
 	--color-primary: #2eabc5;
 	--color-secondary: #62626c;
@@ -19,10 +23,10 @@
 }
 
 #app {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
+	margin: 0;
+	padding: 0;
 	font-weight: normal;
+	overflow: hidden;
 }
 
 a,
@@ -38,16 +42,16 @@ a,
 }
 
 ::-webkit-scrollbar-track {
-	background: #091929;
+	background: #010409;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #4a5568;
+	background: #10161f;
 	border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #718096;
+	background: #1c222e;
 }
 
 @media (hover: hover) {
@@ -59,7 +63,6 @@ a,
 @media (min-width: 1024px) {
 	body {
 		display: flex;
-		place-items: center;
 	}
 
 	#app {

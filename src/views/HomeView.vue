@@ -1,38 +1,62 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watchEffect } from 'vue'
 import { getRadios } from '@/services/radio-service'
 import Sidebar from '@/components/Sidebar.vue'
 import Player from '@/components/Player.vue'
 import RadioItem from '@/components/RadioItem.vue'
 import { PhMagnifyingGlass } from '@phosphor-icons/vue'
+import { useFavoriteStore } from '@/stores/favoriteStore'
 
 const radios = ref([])
 const favoriteRadios = ref([])
 const searchQuery = ref('')
 
+const favoriteStore = useFavoriteStore()
+
 const fetchRadios = async () => {
 	radios.value = await getRadios()
-
-	const savedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]')
-	favoriteRadios.value = radios.value.filter((radio) => savedFavorites.includes(radio.stationuuid))
+	loadFavorites()
 }
 
-const updateFavorites = (fav) => {
-	favoriteRadios.value = radios.value.filter((radio) => fav.includes(radio.stationuuid))
+const loadFavorites = () => {
+	const editedRadios = JSON.parse(localStorage.getItem('editedRadios') || '{}')
+
+	favoriteRadios.value = radios.value
+		.filter((radio) => favoriteStore.isFavorite(radio.stationuuid))
+		.map((radio) => ({
+			...radio,
+			editedName: editedRadios[radio.stationuuid] || null,
+		}))
 }
+
+watchEffect(() => {
+	loadFavorites()
+})
 
 const filteredFavorites = computed(() => {
-	return favoriteRadios.value.filter((radio) =>
-		radio.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-	)
+	return favoriteRadios.value.filter((radio) => {
+		const displayName = radio.editedName || radio.name
+		return displayName.toLowerCase().includes(searchQuery.value.toLowerCase())
+	})
 })
+
+const editRadioName = ({ uuid, newName }) => {
+	const editedRadios = JSON.parse(localStorage.getItem('editedRadios') || '{}')
+	editedRadios[uuid] = newName
+	localStorage.setItem('editedRadios', JSON.stringify(editedRadios))
+	loadFavorites()
+}
+
+const removeRadio = (uuid) => {
+	favoriteStore.toggleFavorite(uuid)
+}
 
 onMounted(fetchRadios)
 </script>
 
 <template>
 	<div>
-		<Sidebar :radios="radios" @update-favorites="updateFavorites" />
+		<Sidebar :radios="radios" @update-favorites="loadFavorites" />
 		<Player />
 
 		<div
@@ -54,7 +78,11 @@ onMounted(fetchRadios)
 					v-for="radio in filteredFavorites"
 					:key="radio.stationuuid"
 					:radio="radio"
-					:favorites="new Set(favoriteRadios.map((r) => r.stationuuid))"
+					:favorites="favoriteStore.favorites"
+					:showPlayIcon="true"
+					:showOptionsIcon="true"
+					@edit-name="editRadioName"
+					@remove-favorite="removeRadio"
 				/>
 			</ul>
 

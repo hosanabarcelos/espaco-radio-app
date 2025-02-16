@@ -1,15 +1,14 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { PhCaretRight, PhCaretLeft, PhHeart, PhMagnifyingGlass } from '@phosphor-icons/vue'
-
 import { getRadios } from '@/services/radio-service'
 import { useAudioStore } from '@/stores/audioStore'
+import { useFavoriteStore } from '@/stores/favoriteStore'
 import Pagination from './Pagination.vue'
 import Dropdown from './Dropdown.vue'
 import RadioItem from './RadioItem.vue'
 
 const isOpen = ref(true)
-const favorites = ref(new Set(JSON.parse(localStorage.getItem('favorites')) || []))
 const allRadios = ref([])
 const filteredRadios = ref([])
 const displayedRadios = ref([])
@@ -31,6 +30,7 @@ const radiosPerPage = 10
 const emit = defineEmits(['select-radio'])
 
 const audioStore = useAudioStore()
+const favoriteStore = useFavoriteStore()
 
 const fetchAllRadios = async () => {
 	isLoading.value = true
@@ -105,13 +105,7 @@ const prevPage = () => {
 }
 
 const toggleFavorite = (stationuuid) => {
-	if (favorites.value.has(stationuuid)) {
-		favorites.value.delete(stationuuid)
-	} else {
-		favorites.value.add(stationuuid)
-	}
-	localStorage.setItem('favorites', JSON.stringify([...favorites.value]))
-	emit('update-favorites', [...favorites.value])
+	favoriteStore.toggleFavorite(stationuuid)
 }
 
 const selectRadio = (radio) => {
@@ -176,10 +170,11 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 							v-for="radio in displayedRadios"
 							:key="radio.stationuuid"
 							:radio="radio"
-							:favorites="favorites"
+							:favorites="favoriteStore.favorites"
 							:is-selected="audioStore.selectedRadio?.stationuuid === radio.stationuuid"
 							@toggle-favorite="toggleFavorite"
 							@select-radio="selectRadio"
+							:showPlayIcon="false"
 						/>
 
 						<li

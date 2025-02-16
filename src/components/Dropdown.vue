@@ -68,7 +68,7 @@ watch(
 		</select>
 
 		<div class="absolute inset-y-0 right-0 mr-3 flex items-center px-2 pointer-events-none">
-			<PhCaretDown :size="18" class="text-gray-400" />
+			<PhCaretDown :size="18" class="text-[#2EABC5]" />
 		</div>
 	</div>
 </template>

@@ -3,12 +3,13 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { PhCaretRight, PhCaretLeft, PhHeart, PhMagnifyingGlass } from '@phosphor-icons/vue'
 
 import { getRadios } from '@/services/radio-service'
+import { useAudioStore } from '@/stores/audioStore'
 import Pagination from './Pagination.vue'
 import Dropdown from './Dropdown.vue'
 import RadioItem from './RadioItem.vue'
 
 const isOpen = ref(true)
-const favorites = ref(new Set())
+const favorites = ref(new Set(JSON.parse(localStorage.getItem('favorites')) || []))
 const allRadios = ref([])
 const filteredRadios = ref([])
 const displayedRadios = ref([])
@@ -26,6 +27,10 @@ const languages = ref([])
 const currentPage = ref(1)
 const totalPages = ref(1)
 const radiosPerPage = 10
+
+const emit = defineEmits(['select-radio'])
+
+const audioStore = useAudioStore()
 
 const fetchAllRadios = async () => {
 	isLoading.value = true
@@ -105,6 +110,17 @@ const toggleFavorite = (stationuuid) => {
 	} else {
 		favorites.value.add(stationuuid)
 	}
+	localStorage.setItem('favorites', JSON.stringify([...favorites.value]))
+	emit('update-favorites', [...favorites.value])
+}
+
+const selectRadio = (radio) => {
+	if (audioStore.selectedRadio?.stationuuid === radio.stationuuid) {
+		audioStore.togglePlay()
+		audioStore.selectedRadio = null
+	} else {
+		audioStore.playRadio(radio)
+	}
 }
 
 onMounted(fetchAllRadios)
@@ -115,89 +131,90 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 <template>
 	<div>
 		<div
-			class="fixed top-0 left-0 h-full w-64 bg-[#091929] text-white shadow-lg transition-transform duration-300 flex flex-col"
-			:class="{ '-translate-x-full': !isOpen, 'translate-x-0': isOpen }"
+			class="fixed top-0 left-0 h-full bg-[#010409] text-white shadow-lg transition-all duration-300 flex flex-col"
+			:class="{ 'w-16': !isOpen, 'w-64': isOpen }"
 		>
-			<div class="flex items-center justify-between p-4">
-				<div class="flex items-center">
-					<img src="/logo.png" alt="Logo Space Rádio" class="w-10 h-auto mr-2" />
-					<h3 class="text-xl font-bold font-trench">Espaço Rádio</h3>
-				</div>
-				<button @click="isOpen = false" class="p-2 bg-gray-700 rounded-md hover:bg-gray-600">
-					<PhCaretLeft :size="22" />
-				</button>
+			<div class="flex items-center justify-center p-4">
+				<img src="/logo.png" alt="Logo Space Rádio" class="w-10 h-auto" />
+				<h1 v-if="isOpen" class="text-xl font-bold font-trench ml-2">Espaço Radio</h1>
 			</div>
+			<div v-if="isOpen" class="flex flex-col flex-grow">
+				<hr class="border-gray-600 mb-1" />
 
-			<hr class="border-gray-600 mb-1" />
+				<div class="p-2">
+					<div class="relative">
+						<PhMagnifyingGlass class="absolute left-2 top-3 text-gray-400" :size="18" />
+						<input
+							v-model="searchQuery"
+							type="text"
+							placeholder="Buscar rádio..."
+							class="w-full pl-8 p-2 rounded-lg bg-gray-800 text-white focus:outline-none border-[0.5px] border-[#2EABC5]"
+						/>
+					</div>
+				</div>
 
-			<div class="p-2">
-				<div class="relative">
-					<PhMagnifyingGlass class="absolute left-2 top-2 text-gray-400" :size="18" />
-					<input
-						v-model="searchQuery"
-						type="text"
-						placeholder="Buscar rádio..."
-						class="w-full pl-8 p-2 rounded-lg bg-gray-800 text-white focus:outline-none"
+				<Dropdown
+					v-model="selectedCountry"
+					:items="countries"
+					placeholder="Filtrar por País"
+					truncate-type="words"
+					truncate-limit="5"
+				/>
+				<Dropdown
+					v-model="selectedLanguage"
+					:items="languages"
+					placeholder="Filtrar por Idioma"
+					truncate-type="chars"
+					truncate-limit="25"
+				/>
+
+				<hr class="border-gray-600 mt-2" />
+
+				<div class="flex-grow overflow-y-auto" style="max-height: calc(100vh - 300px)">
+					<ul class="p-2">
+						<RadioItem
+							v-for="radio in displayedRadios"
+							:key="radio.stationuuid"
+							:radio="radio"
+							:favorites="favorites"
+							:is-selected="audioStore.selectedRadio?.stationuuid === radio.stationuuid"
+							@toggle-favorite="toggleFavorite"
+							@select-radio="selectRadio"
+						/>
+
+						<li
+							v-if="hasMoreRadios && !searchQuery && !selectedCountry && !selectedLanguage"
+							class="flex justify-center p-3 my-1"
+						>
+							<button
+								@click="loadMoreRadios"
+								:disabled="isLoading"
+								class="w-full p-2 bg-transparent hover:text-[#2EABC5] transition disabled:opacity-50"
+							>
+								{{ isLoading ? 'Carregando...' : 'Ver Mais' }}
+							</button>
+						</li>
+					</ul>
+				</div>
+
+				<div v-if="searchQuery || selectedCountry || selectedLanguage" class="p-4 mb-16">
+					<Pagination
+						:currentPage="currentPage"
+						:totalPages="totalPages"
+						@prevPage="prevPage"
+						@nextPage="nextPage"
 					/>
 				</div>
-			</div>
-
-			<Dropdown
-				v-model="selectedCountry"
-				:items="countries"
-				placeholder="Filtrar por País"
-				truncate-type="words"
-				truncate-limit="5"
-			/>
-			<Dropdown
-				v-model="selectedLanguage"
-				:items="languages"
-				placeholder="Filtrar por Idioma"
-				truncate-type="chars"
-				truncate-limit="25"
-			/>
-
-			<hr class="border-gray-600 mt-2" />
-
-			<ul class="p-2 flex-grow overflow-y-auto">
-				<RadioItem
-					v-for="radio in displayedRadios"
-					:key="radio.stationuuid"
-					:radio="radio"
-					:favorites="favorites"
-					@toggle-favorite="toggleFavorite"
-				/>
-
-				<li
-					v-if="hasMoreRadios && !searchQuery && !selectedCountry && !selectedLanguage"
-					class="flex justify-center p-3 my-1"
-				>
-					<button
-						@click="loadMoreRadios"
-						:disabled="isLoading"
-						class="w-full p-2 bg-transparent hover:text-[#2EABC5] transition disabled:opacity-50"
-					>
-						{{ isLoading ? 'Carregando...' : 'Ver Mais' }}
-					</button>
-				</li>
-			</ul>
-
-			<div v-if="searchQuery || selectedCountry || selectedLanguage" class="p-4">
-				<Pagination
-					:currentPage="currentPage"
-					:totalPages="totalPages"
-					@prevPage="prevPage"
-					@nextPage="nextPage"
-				/>
 			</div>
 		</div>
 
 		<button
-			v-if="!isOpen"
-			@click="isOpen = true"
-			class="fixed top-4 left-4 p-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 transition-all"
+			@click="isOpen = !isOpen"
+			class="fixed top-4 p-2 bg-[#010409] text-white rounded-r-md hover:bg-gray-700 transition-all duration-300"
+			:class="{ 'left-16': !isOpen, 'left-64': isOpen }"
 		>
-			<PhCaretRight :size="22" />
+			<PhCaretRight v-if="!isOpen" :size="22" />
+			<PhCaretLeft v-else :size="22" />
 		</button>
 	</div>
 </template>

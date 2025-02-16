@@ -7,7 +7,7 @@ const audioStore = useAudioStore()
 
 <template>
 	<div
-		class="fixed bottom-0 left-0 right-0 bg-[#010409] text-white p-4 flex items-center justify-center shadow-lg h-20 border-t border-gray-600"
+		class="fixed bottom-0 left-0 right-0 bg-[#010409] text-white p-4 flex items-center justify-center shadow-lg h-20 border-t border-gray-600 z-10"
 	>
 		<button
 			@click="audioStore.togglePlay"

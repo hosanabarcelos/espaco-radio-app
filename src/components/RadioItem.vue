@@ -32,6 +32,14 @@ const selectRadio = () => {
 	emit('select-radio', props.radio)
 }
 
+const togglePlay = () => {
+	if (audioStore.selectedRadio?.stationuuid === props.radio.stationuuid) {
+		audioStore.togglePlay()
+	} else {
+		audioStore.playRadio(props.radio)
+	}
+}
+
 const toggleDropdown = () => {
 	emit('dropdown-toggle', props.radio.stationuuid)
 }

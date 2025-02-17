@@ -81,7 +81,7 @@ const handleRemove = () => {
 				<PhPause v-else :size="20" class="text-[#5de3fd]" />
 			</button>
 			<span class="truncate min-w-0">{{ displayName }}</span>
-			<span v-if="isEdited" class="text-xs bg-[#2eabc5] px-2 py-1 rounded font-bold">
+			<span v-if="isEdited" class="text-xs bg-[#2eabc5] px-2 py-1 rounded font-bold radio-item__badge-name">
 				{{ radio.name }}
 			</span>
 		</div>
@@ -121,3 +121,11 @@ const handleRemove = () => {
 		</button>
 	</li>
 </template>
+
+<style scoped>
+@media (max-width: 1024px) {
+		.radio-item__badge-name {
+				display: none;
+		}
+}
+</style>

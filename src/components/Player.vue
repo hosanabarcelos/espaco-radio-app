@@ -25,12 +25,12 @@ const audioStore = useAudioStore()
 				class="w-12 h-12 rounded-lg object-cover"
 			/>
 			<div>
-				<h2 class="text-lg font-bold">{{ audioStore.selectedRadio.name }}</h2>
+				<h2 class="text-lg font-bold player__text--custom">{{ audioStore.selectedRadio.name }}</h2>
 			</div>
 		</div>
 		<div v-else class="flex items-center space-x-4 absolute left-4">
 			<div>
-				<h2 class="text-xl font-bold font-trench ml-2">Comece a ouvir agora!</h2>
+				<h2 class="text-xl font-bold font-trench ml-2 player__text">Comece a ouvir agora!</h2>
 			</div>
 		</div>
 		<div class="flex items-center space-x-2 absolute right-8">
@@ -97,6 +97,19 @@ const audioStore = useAudioStore()
 	}
 	50% {
 		transform: scaleY(0.3);
+	}
+}
+
+@media (max-width: 1024px) {
+	.player__text {
+		font-size: 0.9rem;
+	}
+
+	.player__text--custom {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 8ch;
 	}
 }
 </style>

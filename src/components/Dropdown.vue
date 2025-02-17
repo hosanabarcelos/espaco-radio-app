@@ -14,6 +14,7 @@ const props = defineProps({
 		default: 5,
 	},
 	modelValue: String,
+  disabled: Boolean,
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -52,7 +53,9 @@ watch(
 	<div class="relative mx-2">
 		<select
 			v-model="selectedValue"
+      :disabled="disabled"
 			class="w-full p-2 pl-4 pr-10 mb-1 rounded-lg bg-gray-800 text-white focus:outline-none appearance-none"
+      :class="{ 'opacity-50 cursor-not-allowed': disabled }"
 		>
 			<option value="">
 				{{

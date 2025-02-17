@@ -153,6 +153,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 					placeholder="Filtrar por País"
 					truncate-type="words"
 					truncate-limit="5"
+          :disabled="isLoading"
 				/>
 				<Dropdown
 					v-model="selectedLanguage"
@@ -160,6 +161,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 					placeholder="Filtrar por Idioma"
 					truncate-type="chars"
 					truncate-limit="25"
+          :disabled="isLoading"
 				/>
 
 				<hr class="border-gray-600 mt-2" />
@@ -184,7 +186,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 							<button
 								@click="loadMoreRadios"
 								:disabled="isLoading"
-								class="w-full p-2 bg-transparent hover:text-[#2EABC5] transition disabled:opacity-50"
+								class="w-full p-2 bg-transparent transition disabled:opacity-50 sidebar__show"
 							>
 								{{ isLoading ? 'Carregando...' : 'Ver Mais' }}
 							</button>

@@ -164,7 +164,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 
 				<hr class="border-gray-600 mt-2" />
 
-				<div class="flex-grow overflow-y-auto" style="max-height: calc(100vh - 300px)">
+				<div class="flex-grow overflow-x-auto sidebar__content" style="max-height: calc(100vh - 300px)">
 					<ul class="p-2">
 						<RadioItem
 							v-for="radio in displayedRadios"
@@ -213,3 +213,11 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 		</button>
 	</div>
 </template>
+
+<style scoped>
+@media (max-width: 1024px) {
+  .sidebar__content {
+    height: 40vh;
+  }
+}
+</style>

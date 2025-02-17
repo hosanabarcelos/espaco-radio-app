@@ -125,7 +125,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 <template>
 	<div>
 		<div
-			class="fixed top-0 left-0 h-full bg-[#010409] text-white shadow-lg transition-all duration-300 flex flex-col"
+			class="fixed top-0 left-0 h-full bg-[#010409] text-white shadow-lg transition-all duration-300 flex flex-col z-10"
 			:class="{ 'w-16': !isOpen, 'w-64': isOpen }"
 		>
 			<div class="flex items-center justify-center p-4">
@@ -192,7 +192,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 					</ul>
 				</div>
 
-				<div v-if="searchQuery || selectedCountry || selectedLanguage" class="p-4 mb-16">
+				<div v-if="searchQuery || selectedCountry || selectedLanguage" class="p-4 mb-16 sidebar__pagination">
 					<Pagination
 						:currentPage="currentPage"
 						:totalPages="totalPages"

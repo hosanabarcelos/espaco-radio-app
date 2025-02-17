@@ -60,7 +60,7 @@ onMounted(fetchRadios)
 		<Player />
 
 		<div
-			class="h-screen w-[calc(100vw-16rem)] ml-[16rem] flex flex-col items-start justify-start px-6 pt-[6rem] mr-6"
+			class="h-screen w-[calc(100vw-16rem)] ml-[16rem] flex flex-col items-start justify-start px-6 pt-[6rem] mr-6 home__content"
 		>
 			<h1 class="text-2xl text-white font-bold font-trench ml-2">Favoritos</h1>
 			<div class="relative w-full pr-36">
@@ -69,11 +69,11 @@ onMounted(fetchRadios)
 					v-model="searchQuery"
 					type="text"
 					placeholder="Buscar favorito..."
-					class="w-full pl-8 p-2 rounded-lg bg-gray-800 text-white focus:outline-none border-[0.5px] border-[#2EABC5] mb-5"
+					class="w-full pl-8 p-2 rounded-lg bg-gray-800 text-white focus:outline-none border-[0.5px] border-[#2EABC5] mb-5 home__search"
 				/>
 			</div>
 
-			<ul class="w-full pr-36 overflow-auto favorite-list">
+			<ul class="w-full pr-36 overflow-auto home__favorite-list">
 				<RadioItem
 					v-for="radio in filteredFavorites"
 					:key="radio.stationuuid"
@@ -94,7 +94,22 @@ onMounted(fetchRadios)
 </template>
 
 <style scoped>
-.favorite-list li:last-child {
+.home__favorite-list li:last-child {
 	margin-bottom: 8rem;
+}
+
+@media (max-width: 1024px) {
+	.home__content {
+		margin-left: 4rem;
+	}
+
+	.home__favorite-list {
+		width: 19rem;
+		padding-right: 0;
+	}
+
+	.home__search {
+		width: 19rem;
+	}
 }
 </style>

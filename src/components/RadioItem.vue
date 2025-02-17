@@ -117,10 +117,10 @@ onUnmounted(() => {
 				class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10 dropdown"
 			>
 				<ul>
-					<li class="px-4 py-2 hover:bg-gray-700 cursor-pointer" @click="handleEdit">
+					<li class="px-4 py-2 hover:bg-gray-700 cursor-pointer rounded-lg" @click="handleEdit">
 						Editar nome
 					</li>
-					<li class="px-4 py-2 hover:bg-gray-700 cursor-pointer" @click="handleRemove">
+					<li class="px-4 py-2 hover:bg-gray-700 cursor-pointer rounded-lg" @click="handleRemove">
 						Remover dos favoritos
 					</li>
 				</ul>

@@ -61,6 +61,6 @@ describe('RadioItem.vue', () => {
 		await dropdownButton.trigger('click')
 
 		expect(wrapper.emitted('dropdown-toggle')).toBeTruthy()
-		expect(wrapper.emitted('dropdown-toggle')[0]).toEqual(['123'])
+		expect(wrapper.emitted('dropdown-toggle')?.[0]).toEqual(['123'])
 	})
 })

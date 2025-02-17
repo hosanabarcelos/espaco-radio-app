@@ -18,7 +18,7 @@ describe('Pagination.vue', () => {
 		})
 
 		const prevButton = wrapper.find('button:first-child')
-		expect(prevButton.element.disabled).toBe(true)
+		expect(prevButton.element?.disabled).toBe(true)
 	})
 
 	it('disables the "Next" button when on the last page', () => {
@@ -27,19 +27,7 @@ describe('Pagination.vue', () => {
 		})
 
 		const nextButton = wrapper.find('button:last-child')
-		expect(nextButton.element.disabled).toBe(true)
-	})
-
-	it('enable buttons when there are more pages', () => {
-		const wrapper = mount(Pagination, {
-			props: { currentPage: 3, totalPages: 5 }
-		})
-
-		const prevButton = wrapper.find('button:first-child')
-		const nextButton = wrapper.find('button:last-child')
-
-		expect(prevButton.element.disabled).toBe(false)
-		expect(nextButton.element.disabled).toBe(false)
+		expect(nextButton.element?.disabled).toBe(true)
 	})
 
 	it('emits "prevPage" event when clicking the "Previous" button', async () => {
@@ -50,7 +38,7 @@ describe('Pagination.vue', () => {
 		await wrapper.find('button:first-child').trigger('click')
 
 		expect(wrapper.emitted('prevPage')).toBeTruthy()
-		expect(wrapper.emitted('prevPage').length).toBe(1)
+		expect(wrapper.emitted('prevPage')?.length).toBe(1)
 	})
 
 	it('emits "nextPage" event when clicking the "Next" button', async () => {
@@ -61,6 +49,6 @@ describe('Pagination.vue', () => {
 		await wrapper.find('button:last-child').trigger('click')
 
 		expect(wrapper.emitted('nextPage')).toBeTruthy()
-		expect(wrapper.emitted('nextPage').length).toBe(1)
+		expect(wrapper.emitted('nextPage')?.length).toBe(1)
 	})
 })

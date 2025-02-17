@@ -1,18 +1,18 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { PhHeart, PhPlay, PhPause } from '@phosphor-icons/vue'
+import { computed, onMounted, onUnmounted } from 'vue'
+import { PhHeart, PhPlay, PhPause, PhDotsThreeOutlineVertical } from '@phosphor-icons/vue'
 import { useAudioStore } from '@/stores/audioStore'
 import { useFavoriteStore } from '@/stores/favoriteStore'
-import { PhDotsThreeOutlineVertical } from '@phosphor-icons/vue'
 
 const props = defineProps({
 	radio: Object,
 	isSelected: Boolean,
 	showPlayIcon: Boolean,
 	showOptionsIcon: Boolean,
+	isDropdownOpen: Boolean,
 })
 
-const emit = defineEmits(['select-radio', 'edit-name', 'remove-favorite'])
+const emit = defineEmits(['select-radio', 'edit-name', 'remove-favorite', 'dropdown-toggle'])
 
 const audioStore = useAudioStore()
 const favoriteStore = useFavoriteStore()
@@ -32,32 +32,39 @@ const selectRadio = () => {
 	emit('select-radio', props.radio)
 }
 
-const togglePlay = () => {
-	if (audioStore.selectedRadio?.stationuuid === props.radio.stationuuid) {
-		audioStore.togglePlay()
-	} else {
-		audioStore.playRadio(props.radio)
-	}
-}
-
-const isDropdownOpen = ref(false)
-
 const toggleDropdown = () => {
-	isDropdownOpen.value = !isDropdownOpen.value
+	emit('dropdown-toggle', props.radio.stationuuid)
 }
 
 const handleEdit = () => {
-	const newName = prompt('Como que você prefere chamar essa rádio na sua lista?', props.radio.editedName || props.radio.name)
+	const newName = prompt(
+		'Como você prefere chamar essa rádio na sua lista?',
+		props.radio.editedName || props.radio.name
+	)
 	if (newName) {
 		emit('edit-name', { uuid: props.radio.stationuuid, newName })
 	}
-	isDropdownOpen.value = false
+	emit('dropdown-toggle', null)
 }
 
 const handleRemove = () => {
 	emit('remove-favorite', props.radio.stationuuid)
-	isDropdownOpen.value = false
+	emit('dropdown-toggle', null)
 }
+
+const handleClickOutside = (event) => {
+	if (!event.target.closest('.dropdown') && !event.target.closest('.dropdown-button')) {
+		emit('dropdown-toggle', null)
+	}
+}
+
+onMounted(() => {
+	document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+	document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
@@ -82,21 +89,24 @@ const handleRemove = () => {
 				<PhPause v-else :size="20" class="text-[#5de3fd]" />
 			</button>
 			<span class="truncate min-w-0">{{ displayName }}</span>
-			<span v-if="isEdited" class="text-xs bg-[#2eabc5] px-2 py-1 rounded font-bold radio-item__badge-name">
+			<span
+				v-if="isEdited"
+				class="text-xs bg-[#2eabc5] px-2 py-1 rounded font-bold radio-item__badge-name"
+			>
 				{{ radio.name }}
 			</span>
 		</div>
 
 		<div v-if="showOptionsIcon" class="relative">
 			<div class="flex items-center gap-3">
-				<PhHeart :size="20" weight="fill" :class="'text-red-500 cursor-default'" />
-				<button @click.stop="toggleDropdown" class="p-1 hover:bg-gray-700 rounded">
+				<PhHeart :size="20" weight="fill" class="text-red-500 cursor-default" />
+				<button @click.stop="toggleDropdown" class="p-1 hover:bg-gray-700 rounded dropdown-button">
 					<PhDotsThreeOutlineVertical :size="20" class="text-gray-400" />
 				</button>
 			</div>
 			<div
 				v-if="isDropdownOpen"
-				class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10"
+				class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10 dropdown"
 			>
 				<ul>
 					<li class="px-4 py-2 hover:bg-gray-700 cursor-pointer" @click="handleEdit">
@@ -125,8 +135,8 @@ const handleRemove = () => {
 
 <style scoped>
 @media (max-width: 1024px) {
-		.radio-item__badge-name {
-				display: none;
-		}
+	.radio-item__badge-name {
+		display: none;
+	}
 }
 </style>

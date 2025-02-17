@@ -10,6 +10,7 @@ import { useFavoriteStore } from '@/stores/favoriteStore'
 const radios = ref([])
 const favoriteRadios = ref([])
 const searchQuery = ref('')
+const openDropdownId = ref(null)
 
 const favoriteStore = useFavoriteStore()
 
@@ -51,6 +52,14 @@ const removeRadio = (uuid) => {
 	favoriteStore.toggleFavorite(uuid)
 }
 
+const handleDropdownToggle = (uuid) => {
+	if (openDropdownId.value === uuid) {
+		openDropdownId.value = null
+	} else {
+		openDropdownId.value = uuid
+	}
+}
+
 onMounted(fetchRadios)
 </script>
 
@@ -81,8 +90,10 @@ onMounted(fetchRadios)
 					:favorites="favoriteStore.favorites"
 					:showPlayIcon="true"
 					:showOptionsIcon="true"
+					:isDropdownOpen="openDropdownId === radio.stationuuid"
 					@edit-name="editRadioName"
 					@remove-favorite="removeRadio"
+					@dropdown-toggle="handleDropdownToggle"
 				/>
 			</ul>
 
@@ -106,12 +117,12 @@ onMounted(fetchRadios)
 	.home__favorite-list {
 		width: 18.5rem;
 		padding-right: 0;
-    margin-right: 1rem;
+		margin-right: 1rem;
 	}
 
 	.home__search {
 		width: 18.5rem;
-    margin-right: 1rem;
+		margin-right: 1rem;
 	}
 }
 </style>

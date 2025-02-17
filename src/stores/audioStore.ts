@@ -2,18 +2,18 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const useAudioStore = defineStore('audio', () => {
-		const audio = ref(null);
+		const audio = ref<HTMLAudioElement | null>(null);
 		const isPlaying = ref(false);
-		const selectedRadio = ref(null);
+		const selectedRadio = ref<any | null>(null);
 
-		const playRadio = (radio) => {
+		const playRadio = (radio: any | null) => {
 				if (audio.value) {
 						audio.value.pause();
 						audio.value = null;
 				}
 				if (radio) {
 						audio.value = new Audio(radio.url);
-						audio.value.play();
+						audio.value.play().catch((err) => console.error("Erro ao reproduzir áudio:", err));
 						isPlaying.value = true;
 						selectedRadio.value = radio;
 				} else {
@@ -27,7 +27,7 @@ export const useAudioStore = defineStore('audio', () => {
 						if (isPlaying.value) {
 								audio.value.pause();
 						} else {
-								audio.value.play();
+								audio.value.play().catch((err) => console.error("Erro ao retomar áudio:", err));
 						}
 						isPlaying.value = !isPlaying.value;
 				}

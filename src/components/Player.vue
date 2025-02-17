@@ -59,6 +59,13 @@ const audioStore = useAudioStore()
 	margin-top: 8px;
 }
 
+.player__text--custom {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-width: 35ch;
+}
+
 .wave-bar:nth-child(1) {
 	animation-delay: 0s;
 }
@@ -106,9 +113,6 @@ const audioStore = useAudioStore()
 	}
 
 	.player__text--custom {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 		max-width: 8ch;
 	}
 }

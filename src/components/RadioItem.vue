@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { PhHeart, PhPlay, PhPause } from '@phosphor-icons/vue'
 import { useAudioStore } from '@/stores/audioStore'
 import { useFavoriteStore } from '@/stores/favoriteStore'
+import { PhDotsThreeOutlineVertical } from '@phosphor-icons/vue'
 
 const props = defineProps({
 	radio: Object,

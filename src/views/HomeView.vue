@@ -104,12 +104,14 @@ onMounted(fetchRadios)
 	}
 
 	.home__favorite-list {
-		width: 19rem;
+		width: 18.5rem;
 		padding-right: 0;
+    margin-right: 1rem;
 	}
 
 	.home__search {
-		width: 19rem;
+		width: 18.5rem;
+    margin-right: 1rem;
 	}
 }
 </style>

@@ -86,6 +86,6 @@ Para garantir um fluxo de trabalho eficiente e organizado, segui as seguintes pr
    4. **Pull requests**: As mudanças passaram por PRs seguindo o fluxo do Gitflow. Veja as PRs fechadas [aqui](https://github.com/hosanabarcelos/espaco-radio-app/pulls?q=is%3Apr+is%3Aclosed).
 
 
-## 🏆 Challenge
+---
 > This is a challenge by [Coodesh](https://coodesh.com/).
 

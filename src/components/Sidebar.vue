@@ -130,7 +130,7 @@ watch([searchQuery, selectedCountry, selectedLanguage], applyFilters)
 		>
 			<div class="flex items-center justify-center p-4">
 				<img src="/logo.png" alt="Logo Space Rádio" class="w-10 h-auto" />
-				<h1 v-if="isOpen" class="text-xl font-bold font-trench ml-2">Espaço Radio</h1>
+				<h1 v-if="isOpen" class="text-xl font-bold font-trench ml-2">Espaço Rádio</h1>
 			</div>
 			<div v-if="isOpen" class="flex flex-col flex-grow">
 				<hr class="border-gray-600 mb-1" />

@@ -53,6 +53,7 @@
 
 ### 🏗️ Pré-requisito(s)
 - Ter o [Docker](https://www.docker.com/) instalado na sua máquina.
+- Certificar-se de que o **Docker está rodando** na sua máquina antes de executar os comandos abaixo.
 
 ### 💻 Rodando com Docker
    1. Clone o repositório e acesse o diretório:
